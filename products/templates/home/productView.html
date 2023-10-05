@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block product %}
+
+<div class="px-48 py-8">
+    <div class="grid grid-cols-4 gap-8">
+        <img src="{{product.imageURL}}" class="col-span-2 h5/6 rounded" alt="Product Image" />
+        <div class="col-span-2 flex flex-col gap-4">
+            {% csrf_token %}
+            <span id="productId" hidden>{{ product.id }}</span>
+            <h3 class="font-medium text-2xl">{{product.title}}</h3>
+            <p>Category: <span class="text-gray-500">{{product.category}}</span></p>
+            <p>$ {{product.price}}</p>
+            <div class="flex flex-col gap-16">
+                <div>
+                    <p class="font-medium mb-2">Description</p>
+                    <p>{{product.description}}</p>
+                </div>
+                <button class="bg-black py-4 px-8 w-2/6 text-white rounded hover:shadow-2xl" id="btnAddToCart"
+                    onclick="addToCart()">Add
+                    to Cart</button>
+                {% if messages %}
+                {% for message in messages %}
+                <label>{{message}}</label>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const addToCart = () => {
+        let productId = document.getElementById('productId').textContent
+        const csrftoken = '{{csrf_token}}'
+        let data = {
+            'productId': productId,
+            'tkn': csrftoken
+        }
+        let options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+                'X-CSRFToken': csrftoken
+            },
+            mode: 'same-origin',
+            body: JSON.stringify(data)
+        }
+        fetch('addToCart', options).then((response) => {
+            return response.json()
+        }).then((data) => {
+            if (data.message == "User not logged in") {
+                location.replace('/accounts/login')
+            }
+            location.reload()
+        })
+    }
+
+</script>
+
+
+{% endblock product %}

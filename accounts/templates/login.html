@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block login %}
+
+<div class="px-16 py-8 flex flex-col gap-6 items-center justify-center">
+    <h3 class="text-3xl uppercase text-center">Login</h3>
+    <form action="authenticate" method="post" class="flex flex-col w-8/12 gap-6">
+        {% csrf_token %}
+        <input required type="text" class="px-4 py-4 border rounded w-6/8" placeholder="Enter your Username" name="username">
+        <input required type="password" class="px-4 py-4 border rounded w-6/8" placeholder="Enter your Password" name="password">
+        <button class="px-4 py-4 bg-black text-white w-6/8 rounded hover:shadow-2xl">Login</button>
+        {% if messages %}
+        {% for message in messages %}
+        <label>{{message}}</label>
+        {% endfor %}
+        {% endif %}
+    </form>
+</div>
+
+{% endblock %}

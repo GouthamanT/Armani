@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Armani</title>
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}">
+</head>
+
+<body class="flex flex-col min-h-screen">
+    <div class="bg-black py-2 flex flex-col justify-items-center items-center">
+        <img src="https://w7.pngwing.com/pngs/837/451/png-transparent-emporio-armani-hd-logo.png" class="h-28" />
+        <ul class="w-full flex gap-8 py-2 text-white uppercase justify-center items-center">
+            <li><a href="/" class="px-2.5 py-1 
+                transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300
+                hover:no-underline hover:bg-white hover:text-black hover:rounded">New
+                    Arrivals</a></li>
+            <li>Women</li>
+            <li>Men</li>
+            <li>Kids</li>
+            <li>Gifts</li>
+            <li>Watches</li>
+            {% if user.is_authenticated %}
+            <div class="flex absolute right-5 gap-8 py-2">
+                <li class="px-2 py-1 text-black bg-white rounded-xl">{{ user.first_name }}</li>
+                <li><a href="/product/cart" title="Cart"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                <li><a href="/accounts/logout" title="Logout"><i class="fa fa-sign-out"></i></a></li>
+            </div>
+            {% else %}
+            <div class="flex absolute right-5 gap-8 py-2">
+                <li><a href="/accounts/signup" title="Sign Up"><i class="fa-regular fa-user"></i></a></li>
+                <li><a href="/accounts/login" title="Login"><i class="fa fa-sign-in"></i></a></li>
+            </div>
+            {% endif %}
+        </ul>
+    </div>
+    {% block content %}{% endblock %}
+    {% block product %}{% endblock %}
+    {% block signup %}{% endblock %}
+    {% block login %}{% endblock %}
+    {% block cart %}{% endblock %}
+</body>
+<footer class="mt-auto">
+    <div class="text-center bg-slate-300">@Copyrights reserved by Armani</div>
+</footer>
+
+</html>
